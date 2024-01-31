@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4ljwp6r8mq7d"]
+
+[ext_resource type="PackedScene" uid="uid://4frsh4w6iotr" path="res://world/world.tscn" id="1_2rxei"]
+[ext_resource type="PackedScene" uid="uid://bhm8qxk405jtu" path="res://ui/ui.tscn" id="1_gkqjf"]
+[ext_resource type="Script" path="res://main.gd" id="1_isvjx"]
+[ext_resource type="Script" path="res://playerHandler.gd" id="3_mi7kn"]
+[ext_resource type="PackedScene" uid="uid://cwgea0a6e3vxm" path="res://coins.tscn" id="3_u6241"]
+[ext_resource type="PackedScene" uid="uid://c01squ81o4pxw" path="res://world/wall.tscn" id="6_2rcv1"]
+[ext_resource type="AudioStream" uid="uid://bf4tnu67bfatx" path="res://sound/metronome.ogg" id="7_17e81"]
+[ext_resource type="Script" path="res://Sound.gd" id="7_76ryp"]
+[ext_resource type="Script" path="res://ServerNode.gd" id="9_f24kv"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_isvjx")
+
+[node name="UI" parent="." instance=ExtResource("1_gkqjf")]
+
+[node name="Players" type="Node2D" parent="."]
+script = ExtResource("3_mi7kn")
+
+[node name="Coins" parent="." instance=ExtResource("3_u6241")]
+position = Vector2(229.684, 306.683)
+
+[node name="World" parent="." instance=ExtResource("1_2rxei")]
+
+[node name="Wall" parent="World" instance=ExtResource("6_2rcv1")]
+visible = false
+position = Vector2(600, 8)
+scale = Vector2(59, 1)
+
+[node name="Wall2" parent="World" instance=ExtResource("6_2rcv1")]
+visible = false
+position = Vector2(600, 795)
+scale = Vector2(59, 1)
+
+[node name="Wall3" parent="World" instance=ExtResource("6_2rcv1")]
+visible = false
+position = Vector2(9, 404)
+scale = Vector2(0.880002, 40.48)
+
+[node name="Wall5" parent="World" instance=ExtResource("6_2rcv1")]
+visible = false
+position = Vector2(1187, 404)
+scale = Vector2(0.880002, 40.48)
+
+[node name="ServerNode" type="Node" parent="."]
+script = ExtResource("9_f24kv")
+
+[node name="Sound" type="Node2D" parent="."]
+script = ExtResource("7_76ryp")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("7_17e81")
+pitch_scale = 1.05
