@@ -1,3 +1,5 @@
+### I use this application to get lonlat coords and manually update main.py ###
+### Could probably be better integrated ###
 import cv2
 import numpy as np
 
