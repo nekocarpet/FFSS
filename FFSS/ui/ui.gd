@@ -22,8 +22,8 @@ func update_pos_label():
 	for id in players.players.keys():
 		var player_info = players.players[id]
 		var pos = player_info["pos"]
-		# Format each player's info into 'id: (x, y)' string
-		var pos_string = "%s: (%s, %s)" % [id, pos.x, pos.y]
+		# Format each player's info into 'id: (x, y)' string, with positions rounded to 1 decimal place
+		var pos_string = "%s: (%.1f, %.1f)" % [id, pos.x, pos.y]
 		pos_strings.append(pos_string)
 	# Join all formatted strings with a newline to separate entries
 	ppos_label.text = "\n".join(pos_strings)
