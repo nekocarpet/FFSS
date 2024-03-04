@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://kxnpeeh3gfcg"]
+
+[ext_resource type="Script" path="res://Strikes.gd" id="1_u1nq0"]
+
+[node name="Strikes" type="Node2D"]
+z_index = 3
+script = ExtResource("1_u1nq0")

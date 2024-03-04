@@ -1,24 +1,46 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4ljwp6r8mq7d"]
+[gd_scene load_steps=14 format=3 uid="uid://c4ljwp6r8mq7d"]
 
 [ext_resource type="PackedScene" uid="uid://4frsh4w6iotr" path="res://world/world.tscn" id="1_2rxei"]
+[ext_resource type="Script" path="res://Camera2D.gd" id="1_ajl4j"]
 [ext_resource type="PackedScene" uid="uid://bhm8qxk405jtu" path="res://ui/ui.tscn" id="1_gkqjf"]
-[ext_resource type="Script" path="res://main.gd" id="1_isvjx"]
+[ext_resource type="Script" path="res://addons/shaker/shaker.gd" id="2_k2rii"]
+[ext_resource type="PackedScene" uid="uid://kxnpeeh3gfcg" path="res://entity/strikes.tscn" id="3_di3wh"]
 [ext_resource type="Script" path="res://playerHandler.gd" id="3_mi7kn"]
-[ext_resource type="PackedScene" uid="uid://cwgea0a6e3vxm" path="res://coins.tscn" id="3_u6241"]
+[ext_resource type="PackedScene" uid="uid://cwgea0a6e3vxm" path="res://coins.tscn" id="4_ewlf5"]
 [ext_resource type="PackedScene" uid="uid://c01squ81o4pxw" path="res://world/wall.tscn" id="6_2rcv1"]
 [ext_resource type="AudioStream" uid="uid://bf4tnu67bfatx" path="res://sound/metronome.ogg" id="7_17e81"]
 [ext_resource type="Script" path="res://Sound.gd" id="7_76ryp"]
 [ext_resource type="Script" path="res://ServerNode.gd" id="9_f24kv"]
+[ext_resource type="AudioStream" uid="uid://0ucoautulcog" path="res://sound/strike.ogg" id="10_io0rm"]
+
+[sub_resource type="Curve" id="Curve_k2n5c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_isvjx")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("1_ajl4j")
+
+[node name="Timer" type="Timer" parent="Camera2D"]
+one_shot = true
+
+[node name="Shaker" type="Node" parent="Camera2D" node_paths=PackedStringArray("target_node")]
+script = ExtResource("2_k2rii")
+target_node = NodePath("..")
+target_property = &"Offset"
+max_value = 10.0
+fall_off = SubResource("Curve_k2n5c")
 
 [node name="UI" parent="." instance=ExtResource("1_gkqjf")]
+
+[node name="Strikes" parent="." instance=ExtResource("3_di3wh")]
 
 [node name="Players" type="Node2D" parent="."]
 script = ExtResource("3_mi7kn")
 
-[node name="Coins" parent="." instance=ExtResource("3_u6241")]
+[node name="Coins" parent="." instance=ExtResource("4_ewlf5")]
 
 [node name="World" parent="." instance=ExtResource("1_2rxei")]
 
@@ -59,3 +81,14 @@ pitch_scale = 1.8
 [node name="DespawnPlayer" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("7_17e81")
 pitch_scale = 0.5
+
+[node name="PlayerMove" type="AudioStreamPlayer" parent="Sound"]
+volume_db = -2.0
+pitch_scale = 0.5
+
+[node name="Strike" type="AudioStreamPlayer2D" parent="Sound"]
+stream = ExtResource("10_io0rm")
+pitch_scale = 2.0
+max_polyphony = 30
+
+[connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]

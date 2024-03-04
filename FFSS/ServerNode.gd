@@ -21,8 +21,8 @@ func _process(delta):
 		var peer: PacketPeerUDP = server.take_connection()
 		var packet = peer.get_packet()
 		msg = packet.get_string_from_utf8()
-		print("Accepted peer: %s:%s" % [peer.get_packet_ip(), peer.get_packet_port()])
-		print("Received data: %s" % [msg])
+		#print("Accepted peer: %s:%s" % [peer.get_packet_ip(), peer.get_packet_port()])
+		#print("Received data: %s" % [msg])
 		parse_data()
 		# Reply so it knows we received the message.
 		#peer.put_packet(packet)
@@ -38,7 +38,7 @@ func parse_data():
 	for segment in player_segments:
 		var details = segment.split(",", true, 0)
 		if details.size() == 3:
-			var id = int(details[0])
+			var id = details[0]
 			var pos =  Vector2(float(details[1]), float(details[2]))
 			parsed_data[id] = {"pos": pos}
 	emit_signal("player_data_parsed", parsed_data)

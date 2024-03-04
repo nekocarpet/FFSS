@@ -1,10 +1,11 @@
 extends Node2D
 
 var coin = preload("res://entity/coin.tscn")
-var spawn_area = Rect2(Vector2(0, 0), Vector2(800, 800))  # Adjust to your game area
+var spawn_area = Rect2(Vector2(10, 10), Vector2(1910, 1070))  # Adjust to your game area
 
 func _ready():
 	Messenger.connect("coin_collected", _on_coin_collect)
+	spawn_coin()
 	spawn_coin()
 
 func spawn_coin():
